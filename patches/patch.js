@@ -40,8 +40,8 @@
 
 // Script that hides elements in jupyter notebook to prevent user from breaking stuff
 // This script is "injected" into ./dist/lab/index.html (see pipeline)
-// Author: Chat-GPT
-document.addEventListener('DOMContentLoaded', (event) => {
+// Author: Chat-GPT & Antigravity
+function initHiding() {
     // Use a mutation observer to ensure the elements are hidden even if the DOM changes
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -59,10 +59,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Function to hide specific elements
     function hideSpecificElements() {
         const selectors = [
-            // file browser search menue
+            // file browser search menu
             '.jp-FileBrowser-toolbar.jp-SidePanel-toolbar.jp-Toolbar.lm-Widget',
-            // jupyter lite icon / logo
+            // jupyter lite icon / logo (typestyle class hash, plus fallback standard template class names)
             '.f1xpzunt.lm-Widget',
+            '.jp-MainTemplate-logo',
+            '#jp-MainLogo',
             // "click to add new cell"
             '.jp-Notebook-footer.lm-Widget',
         ];
@@ -75,6 +77,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    // Initially hide specific elements, disable editing on double-click for Markdown cells, and override Shift + Enter behavior when the script runs
+    // Initially hide specific elements
     hideSpecificElements();
-});
+}
+
+// Ensure initHiding runs whether DOMContentLoaded has already fired or not
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHiding);
+} else {
+    initHiding();
+}
