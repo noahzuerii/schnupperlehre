@@ -11,6 +11,8 @@ The JupyterLite site is hosted as a static site with GitHub Pages and can be acc
 ## Modifications
 We have made several changes to the default JupyterLite interface to prevent users from "breaking" the exercise by clicking on "more advanced" features. These changes can be found in [settings-override.json](/patches/settings-override.json) and are applied to the site during the build process.
 
+Additionally, [style.css](/patches/style.css) gives the interface a friendlier, more polished look (colors, rounded cards, nicer lesson typography) on top of the Catppuccin Frappé theme, and is injected during the build the same way as [patch.js](/patches/patch.js).
+
 ## Limitations
 Because JupyterLite runs everything inside a user's browser, I've encountered several limitations while writing the exercises:
 * `input()` doesn't work normally (see [this issue](https://github.com/jupyterlite/jupyterlite/issues/275) for more details)

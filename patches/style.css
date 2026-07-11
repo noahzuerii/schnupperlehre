@@ -1,0 +1,185 @@
+/*
+ * Visual polish for the Schnuppertag JupyterLite site.
+ * Builds on top of the Catppuccin Frappé theme (see settings-override.json)
+ * and only touches presentation - no JupyterLab behaviour is changed here.
+ */
+
+:root {
+  --st-mauve: #ca9ee6;
+  --st-blue: #8caaee;
+  --st-green: #a6d189;
+  --st-yellow: #e5c890;
+  --st-peach: #ef9f76;
+  --st-pink: #f4b8e4;
+  --st-teal: #81c8be;
+  --jp-border-radius: 8px;
+}
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--jp-inverse-layout-color0, #737994);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--st-mauve);
+  background-clip: padding-box;
+}
+
+/* ---------- top bar branding ---------- */
+/* The menu bar + logo are hidden by patch.js; fill the freed strip with a
+   small brand label instead of leaving it empty. */
+#jp-top-panel {
+  background: linear-gradient(90deg, #292c3c, #303446);
+  border-bottom: 1px solid rgba(202, 158, 230, 0.25);
+}
+#jp-top-panel::after {
+  content: "Schnuppertag · Python-Lab";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #f4e9fb;
+  text-shadow: 0 0 8px rgba(202, 158, 230, 0.6);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 9999;
+}
+
+/* ---------- rendered markdown (lesson text) ---------- */
+.jp-RenderedHTMLCommon {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.jp-RenderedHTMLCommon h1 {
+  font-weight: 700;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.8em;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--st-mauve), var(--st-blue), transparent) 1;
+}
+
+.jp-RenderedHTMLCommon h2 {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--jp-layout-color0, #303446);
+  background: linear-gradient(90deg, var(--st-mauve), var(--st-pink));
+  padding: 0.25em 0.9em;
+  border-radius: 999px;
+  margin-top: 1.6em;
+  margin-bottom: 0.7em;
+}
+
+.jp-RenderedHTMLCommon h3 {
+  font-weight: 700;
+  color: var(--st-peach);
+  letter-spacing: 0.02em;
+  margin-top: 1.3em;
+}
+
+.jp-RenderedHTMLCommon hr {
+  border: none;
+  height: 2px;
+  margin: 1.6em 0;
+  background: linear-gradient(90deg, var(--st-mauve), transparent);
+  opacity: 0.6;
+}
+
+.jp-RenderedHTMLCommon ul li,
+.jp-RenderedHTMLCommon ol li {
+  margin: 0.3em 0;
+}
+
+.jp-RenderedHTMLCommon ul > li::marker {
+  color: var(--st-mauve);
+}
+
+.jp-RenderedHTMLCommon a {
+  color: var(--st-blue);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(140, 170, 238, 0.4);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.jp-RenderedHTMLCommon a:hover {
+  color: var(--st-teal);
+  border-bottom-color: var(--st-teal);
+}
+
+.jp-RenderedHTMLCommon code {
+  background: rgba(202, 158, 230, 0.14);
+  border: 1px solid rgba(202, 158, 230, 0.25);
+  border-radius: 5px;
+  padding: 0.1em 0.4em;
+}
+
+.jp-RenderedHTMLCommon pre {
+  background: #232634 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.9em 1.1em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.jp-RenderedHTMLCommon pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.jp-RenderedHTMLCommon img {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  margin: 0.6em 0;
+}
+
+.jp-RenderedHTMLCommon table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- launcher ---------- */
+.jp-Launcher .jp-Launcher-sectionTitle {
+  color: var(--st-blue) !important;
+  letter-spacing: 0.02em;
+}
+
+.jp-LauncherCard {
+  border-radius: 10px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  border: 1px solid transparent;
+}
+.jp-LauncherCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+  border-color: rgba(202, 158, 230, 0.4);
+}
+
+/* ---------- file browser ---------- */
+.jp-DirListing-item {
+  border-radius: 6px;
+  transition: background-color 0.12s ease;
+}
+.jp-DirListing-item.jp-mod-selected {
+  background: rgba(202, 158, 230, 0.22) !important;
+}
+
+/* ---------- notebook cells ---------- */
+.jp-Cell {
+  border-radius: 8px;
+}
+.jp-Notebook .jp-Cell.jp-mod-active .jp-InputPrompt,
+.jp-Notebook .jp-Cell.jp-mod-active .jp-OutputPrompt {
+  color: var(--st-mauve);
+}
