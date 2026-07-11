@@ -1,18 +1,66 @@
 /*
- * Visual polish for the Schnuppertag JupyterLite site.
- * Builds on top of the Catppuccin Frappé theme (see settings-override.json)
- * and only touches presentation - no JupyterLab behaviour is changed here.
+ * "Aurora" theme for the Schnuppertag JupyterLite site.
+ * Overrides JupyterLab's core CSS variables (not just the rendered lesson
+ * text) so the whole app chrome - toolbars, tabs, sidebar, cells - moves
+ * away from the stock look, on top of whatever base theme is configured
+ * in settings-override.json.
  */
 
 :root {
-  --st-mauve: #ca9ee6;
-  --st-blue: #8caaee;
-  --st-green: #a6d189;
-  --st-yellow: #e5c890;
-  --st-peach: #ef9f76;
-  --st-pink: #f4b8e4;
-  --st-teal: #81c8be;
-  --jp-border-radius: 8px;
+  --aurora-bg: #14111f;
+  --aurora-pink: #ff5d8f;
+  --aurora-orange: #ff9d5c;
+  --aurora-teal: #2dd4bf;
+  --aurora-violet: #a78bfa;
+  --aurora-sky: #7dd3fc;
+  --aurora-text: #f5f3ff;
+
+  --jp-layout-color0: #14111f !important;
+  --jp-layout-color1: #1b1730 !important;
+  --jp-layout-color2: #241f3d !important;
+  --jp-layout-color3: #2d2650 !important;
+  --jp-layout-color4: #362d5e !important;
+  --jp-inverse-layout-color0: #f4f1ff !important;
+  --jp-inverse-layout-color1: #e8e3ff !important;
+
+  --jp-content-font-color0: var(--aurora-text) !important;
+  --jp-content-font-color1: var(--aurora-text) !important;
+  --jp-content-font-color2: #cabdf5 !important;
+  --jp-content-font-color3: #9c8fc4 !important;
+  --jp-ui-font-color0: var(--aurora-text) !important;
+  --jp-ui-font-color1: var(--aurora-text) !important;
+  --jp-ui-font-color2: #cabdf5 !important;
+  --jp-ui-font-color3: #9c8fc4 !important;
+
+  --jp-border-color0: #362d5e !important;
+  --jp-border-color1: #362d5e !important;
+  --jp-border-color2: #2d2650 !important;
+  --jp-border-color3: #241f3d !important;
+
+  --jp-brand-color0: #d6316a !important;
+  --jp-brand-color1: var(--aurora-pink) !important;
+  --jp-brand-color2: #ff8fb3 !important;
+  --jp-brand-color3: #ffc2d6 !important;
+  --jp-accent-color0: #0fb59d !important;
+  --jp-accent-color1: var(--aurora-teal) !important;
+  --jp-accent-color2: #6ee7db !important;
+  --jp-accent-color3: #b6f4ec !important;
+  --jp-warn-color1: var(--aurora-orange) !important;
+  --jp-error-color1: #ff5d5d !important;
+  --jp-success-color1: var(--aurora-teal) !important;
+
+  --jp-content-link-color: var(--aurora-sky) !important;
+  --jp-cell-editor-background: #1b1730 !important;
+  --jp-editor-selected-focused-background: rgba(255, 93, 143, 0.22) !important;
+  --jp-toolbar-background: #1b1730 !important;
+
+  --jp-border-radius: 10px;
+}
+
+body {
+  background: radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255, 93, 143, 0.16), transparent),
+    radial-gradient(ellipse 800px 500px at 100% 110%, rgba(45, 212, 191, 0.12), transparent),
+    var(--aurora-bg) !important;
 }
 
 /* ---------- scrollbars ---------- */
@@ -24,22 +72,24 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--jp-inverse-layout-color0, #737994);
+  background-color: #453b6e;
   border-radius: 999px;
   border: 3px solid transparent;
   background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--st-mauve);
+  background-color: var(--aurora-pink);
   background-clip: padding-box;
 }
 
 /* ---------- top bar branding ---------- */
-/* The menu bar + logo are hidden by patch.js; fill the freed strip with a
-   small brand label instead of leaving it empty. */
 #jp-top-panel {
-  background: linear-gradient(90deg, #292c3c, #303446);
-  border-bottom: 1px solid rgba(202, 158, 230, 0.25);
+  background: linear-gradient(90deg, var(--aurora-pink), var(--aurora-violet), var(--aurora-sky)) !important;
+  border-bottom: none !important;
+}
+#jp-top-panel jp-toolbar,
+#jp-top-panel .jp-Toolbar {
+  background: linear-gradient(90deg, var(--aurora-pink), var(--aurora-violet), var(--aurora-sky)) !important;
 }
 #jp-top-panel::after {
   content: "Schnuppertag · Python-Lab";
@@ -48,138 +98,234 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.02em;
-  color: #f4e9fb;
-  text-shadow: 0 0 8px rgba(202, 158, 230, 0.6);
+  color: #14111f;
   pointer-events: none;
   white-space: nowrap;
   z-index: 9999;
 }
 
+/* ---------- tabs ---------- */
+.lm-TabBar-tab.lm-mod-current {
+  border-top: 2px solid var(--aurora-pink) !important;
+}
+
+/* ---------- sidebar ---------- */
+.jp-SideBar .lm-TabBar-tab.lm-mod-current {
+  border-left: 3px solid var(--aurora-pink) !important;
+  box-shadow: none !important;
+}
+
 /* ---------- rendered markdown (lesson text) ---------- */
 .jp-RenderedHTMLCommon {
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 15.5px;
+  line-height: 1.75;
 }
 
 .jp-RenderedHTMLCommon h1 {
-  font-weight: 700;
-  padding-bottom: 0.4em;
-  margin-bottom: 0.8em;
-  border-bottom: 2px solid transparent;
-  border-image: linear-gradient(90deg, var(--st-mauve), var(--st-blue), transparent) 1;
+  font-weight: 800;
+  font-size: 2em;
+  background: linear-gradient(90deg, var(--aurora-pink), var(--aurora-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.7em;
 }
 
 .jp-RenderedHTMLCommon h2 {
   display: inline-block;
-  font-weight: 700;
-  color: var(--jp-layout-color0, #303446);
-  background: linear-gradient(90deg, var(--st-mauve), var(--st-pink));
-  padding: 0.25em 0.9em;
+  font-weight: 800;
+  color: #14111f !important;
+  background: linear-gradient(120deg, var(--aurora-teal), var(--aurora-sky));
+  padding: 0.3em 1em;
   border-radius: 999px;
-  margin-top: 1.6em;
+  margin-top: 1.8em;
   margin-bottom: 0.7em;
+  box-shadow: 0 6px 18px rgba(45, 212, 191, 0.25);
 }
 
 .jp-RenderedHTMLCommon h3 {
-  font-weight: 700;
-  color: var(--st-peach);
-  letter-spacing: 0.02em;
-  margin-top: 1.3em;
+  font-weight: 800;
+  color: var(--aurora-orange) !important;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.95em;
+  margin-top: 1.4em;
+  border-left: 3px solid var(--aurora-orange);
+  padding-left: 0.6em;
 }
 
 .jp-RenderedHTMLCommon hr {
   border: none;
-  height: 2px;
-  margin: 1.6em 0;
-  background: linear-gradient(90deg, var(--st-mauve), transparent);
-  opacity: 0.6;
+  height: 3px;
+  margin: 1.8em 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--aurora-pink), var(--aurora-violet), var(--aurora-sky), transparent);
 }
 
 .jp-RenderedHTMLCommon ul li,
 .jp-RenderedHTMLCommon ol li {
-  margin: 0.3em 0;
+  margin: 0.35em 0;
 }
-
 .jp-RenderedHTMLCommon ul > li::marker {
-  color: var(--st-mauve);
+  color: var(--aurora-pink);
 }
 
 .jp-RenderedHTMLCommon a {
-  color: var(--st-blue);
+  color: var(--aurora-sky) !important;
   text-decoration: none;
-  border-bottom: 1px solid rgba(140, 170, 238, 0.4);
+  border-bottom: 1px solid rgba(125, 211, 252, 0.4);
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 .jp-RenderedHTMLCommon a:hover {
-  color: var(--st-teal);
-  border-bottom-color: var(--st-teal);
+  color: var(--aurora-teal) !important;
+  border-bottom-color: var(--aurora-teal);
 }
 
 .jp-RenderedHTMLCommon code {
-  background: rgba(202, 158, 230, 0.14);
-  border: 1px solid rgba(202, 158, 230, 0.25);
+  background: rgba(255, 93, 143, 0.14);
+  border: 1px solid rgba(255, 93, 143, 0.3);
   border-radius: 5px;
   padding: 0.1em 0.4em;
+  color: #ffc2d6;
 }
 
 .jp-RenderedHTMLCommon pre {
-  background: #232634 !important;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #100d1c !important;
+  border: 1px solid var(--jp-border-color1);
+  border-left: 3px solid var(--aurora-violet);
   border-radius: 10px;
   padding: 0.9em 1.1em;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 .jp-RenderedHTMLCommon pre code {
   background: transparent;
   border: none;
   padding: 0;
+  color: inherit;
 }
 
 .jp-RenderedHTMLCommon img {
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
   margin: 0.6em 0;
-}
-
-.jp-RenderedHTMLCommon table {
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 /* ---------- launcher ---------- */
 .jp-Launcher .jp-Launcher-sectionTitle {
-  color: var(--st-blue) !important;
-  letter-spacing: 0.02em;
+  color: var(--aurora-sky) !important;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.85em;
 }
 
 .jp-LauncherCard {
-  border-radius: 10px;
+  border-radius: 12px;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-  border: 1px solid transparent;
+  border: 1px solid var(--jp-border-color1);
 }
 .jp-LauncherCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
-  border-color: rgba(202, 158, 230, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  border-color: var(--aurora-pink);
 }
 
-/* ---------- file browser ---------- */
+/* ---------- file browser: colorful lesson list ---------- */
 .jp-DirListing-item {
-  border-radius: 6px;
-  transition: background-color 0.12s ease;
+  border-radius: 8px;
+  border-left: 3px solid transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 }
+.jp-DirListing-item:nth-of-type(5n + 1) { border-left-color: var(--aurora-pink); }
+.jp-DirListing-item:nth-of-type(5n + 2) { border-left-color: var(--aurora-orange); }
+.jp-DirListing-item:nth-of-type(5n + 3) { border-left-color: var(--aurora-teal); }
+.jp-DirListing-item:nth-of-type(5n + 4) { border-left-color: var(--aurora-sky); }
+.jp-DirListing-item:nth-of-type(5n + 5) { border-left-color: var(--aurora-violet); }
 .jp-DirListing-item.jp-mod-selected {
-  background: rgba(202, 158, 230, 0.22) !important;
+  background: rgba(255, 93, 143, 0.18) !important;
 }
 
 /* ---------- notebook cells ---------- */
 .jp-Cell {
-  border-radius: 8px;
+  border-radius: 10px;
 }
 .jp-Notebook .jp-Cell.jp-mod-active .jp-InputPrompt,
 .jp-Notebook .jp-Cell.jp-mod-active .jp-OutputPrompt {
-  color: var(--st-mauve);
+  color: var(--aurora-pink);
+}
+.jp-Notebook .jp-Cell.jp-mod-active .jp-InputArea-editor {
+  border-left: 3px solid var(--aurora-pink);
+}
+
+/* ---------- welcome splash (injected by patch.js) ---------- */
+#schnuppertag-welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse 900px 600px at 20% 0%, rgba(255, 93, 143, 0.25), transparent),
+    radial-gradient(ellipse 800px 600px at 90% 100%, rgba(45, 212, 191, 0.2), transparent),
+    var(--aurora-bg);
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+#schnuppertag-welcome.schnuppertag-welcome-hide {
+  opacity: 0;
+}
+.schnuppertag-welcome-card {
+  max-width: 480px;
+  margin: 0 24px;
+  padding: 2.5em 2.4em;
+  border-radius: 20px;
+  background: #1b1730;
+  border: 1px solid #362d5e;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", helvetica, arial, sans-serif;
+}
+.schnuppertag-welcome-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #14111f;
+  background: linear-gradient(90deg, var(--aurora-pink), var(--aurora-orange));
+  padding: 0.4em 1em;
+  border-radius: 999px;
+  margin-bottom: 1.1em;
+}
+.schnuppertag-welcome-card h1 {
+  font-size: 1.6em;
+  font-weight: 800;
+  color: var(--aurora-text);
+  margin: 0 0 0.5em;
+  line-height: 1.3;
+}
+.schnuppertag-welcome-card p {
+  color: #cabdf5;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0 0 1.6em;
+}
+.schnuppertag-welcome-card button {
+  border: none;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 700;
+  color: #14111f;
+  background: linear-gradient(90deg, var(--aurora-teal), var(--aurora-sky));
+  padding: 0.7em 1.8em;
+  border-radius: 999px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 8px 20px rgba(45, 212, 191, 0.3);
+}
+.schnuppertag-welcome-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(45, 212, 191, 0.4);
 }

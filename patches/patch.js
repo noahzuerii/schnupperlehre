@@ -87,3 +87,58 @@ if (document.readyState === 'loading') {
 } else {
     initHiding();
 }
+
+// Friendly welcome overlay, shown once per browser tab (see style.css for
+// the actual look). Doubles as a nicer thing to look at while the Pyodide
+// kernel boots up in the background.
+function showWelcomeOverlay() {
+    if (sessionStorage.getItem('schnuppertag_intro_seen')) {
+        return;
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'schnuppertag-welcome';
+    overlay.innerHTML = `
+        <div class="schnuppertag-welcome-card">
+            <div class="schnuppertag-welcome-badge">Schnuppertag</div>
+            <h1>Willkommen in deinem Python-Lab</h1>
+            <p>Links siehst du die Aufgaben. Öffne eine Datei, lies die Beschreibung und schreib deinen Code in das leere Feld darunter.</p>
+            <button type="button">Los geht's</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('button').addEventListener('click', () => {
+        sessionStorage.setItem('schnuppertag_intro_seen', '1');
+        overlay.classList.add('schnuppertag-welcome-hide');
+        setTimeout(() => overlay.remove(), 400);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showWelcomeOverlay);
+} else {
+    showWelcomeOverlay();
+}
+
+// Custom favicon so the browser tab doesn't show the stock JupyterLite icon.
+function setFavicon() {
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>"
+        + "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>"
+        + "<stop offset='0%' stop-color='%23ff5d8f'/>"
+        + "<stop offset='100%' stop-color='%232dd4bf'/>"
+        + "</linearGradient></defs>"
+        + "<circle cx='32' cy='32' r='30' fill='url(%23g)'/>"
+        + "<text x='32' y='43' font-size='30' font-family='Menlo, monospace' font-weight='700' "
+        + "text-anchor='middle' fill='%2314111f'>S</text></svg>";
+
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+    }
+    link.type = 'image/svg+xml';
+    link.href = 'data:image/svg+xml,' + svg;
+}
+setFavicon();
