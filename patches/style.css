@@ -107,6 +107,10 @@ body {
 }
 
 /* ---------- tabs ---------- */
+.lm-TabBar-tab {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
 .lm-TabBar-tab.lm-mod-current {
   border-top: 2px solid var(--aurora-pink) !important;
 }
@@ -115,6 +119,23 @@ body {
 .jp-SideBar .lm-TabBar-tab.lm-mod-current {
   border-left: 3px solid var(--aurora-pink) !important;
   box-shadow: none !important;
+}
+
+/* ---------- launcher background ---------- */
+.jp-Launcher {
+  background: radial-gradient(ellipse 700px 500px at 90% -10%, rgba(255, 93, 143, 0.12), transparent),
+    radial-gradient(ellipse 700px 500px at -10% 110%, rgba(45, 212, 191, 0.1), transparent) !important;
+}
+
+/* ---------- readable notebook column ---------- */
+.jp-Notebook {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* ---------- cell focus glow ---------- */
+.jp-Cell.jp-mod-active .jp-InputArea-editor {
+  box-shadow: 0 0 0 1px rgba(255, 93, 143, 0.35), 0 4px 16px rgba(255, 93, 143, 0.08);
 }
 
 /* ---------- rendered markdown (lesson text) ---------- */
@@ -260,6 +281,28 @@ body {
   border-left: 3px solid var(--aurora-pink);
 }
 
+/* ---------- reset button (injected by patch.js) ---------- */
+#schnuppertag-reset-btn {
+  position: fixed;
+  top: 3px;
+  right: 12px;
+  z-index: 100000;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #14111f;
+  background: rgba(20, 17, 31, 0.16);
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+#schnuppertag-reset-btn:hover {
+  background: rgba(20, 17, 31, 0.32);
+  transform: translateY(1px);
+}
+
 /* ---------- welcome splash (injected by patch.js) ---------- */
 #schnuppertag-welcome {
   position: fixed;
@@ -328,4 +371,31 @@ body {
 .schnuppertag-welcome-card button:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 26px rgba(45, 212, 191, 0.4);
+}
+.schnuppertag-welcome-kernel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin-top: 1.6em;
+  font-size: 0.78em;
+  color: #9c8fc4;
+}
+.schnuppertag-welcome-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--aurora-teal);
+  flex-shrink: 0;
+  animation: schnuppertag-pulse 1.4s ease-in-out infinite;
+}
+@keyframes schnuppertag-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .schnuppertag-welcome-dot {
+    animation: none;
+    opacity: 1;
+  }
 }

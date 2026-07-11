@@ -104,6 +104,10 @@ function showWelcomeOverlay() {
             <h1>Willkommen in deinem Python-Lab</h1>
             <p>Links siehst du die Aufgaben. Öffne eine Datei, lies die Beschreibung und schreib deinen Code in das leere Feld darunter.</p>
             <button type="button">Los geht's</button>
+            <div class="schnuppertag-welcome-kernel">
+                <span class="schnuppertag-welcome-dot"></span>
+                Python-Kernel startet im Hintergrund (dauert beim ersten Mal ein paar Sekunden)
+            </div>
         </div>
     `;
     document.body.appendChild(overlay);
@@ -119,6 +123,48 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', showWelcomeOverlay);
 } else {
     showWelcomeOverlay();
+}
+
+// Manual "reset everything" button. Reuses the same storage-clearing logic
+// as the automatic 12h reset above, just triggered on demand instead of by
+// a timer, in case a student wants to start a task over from scratch.
+// Appended directly to <body> (fixed position) rather than into a Lumino
+// panel, so it can't be wiped out by JupyterLab's own layout management.
+function addResetButton() {
+    if (document.getElementById('schnuppertag-reset-btn')) {
+        return;
+    }
+
+    const btn = document.createElement('button');
+    btn.id = 'schnuppertag-reset-btn';
+    btn.type = 'button';
+    btn.textContent = 'Zurücksetzen';
+    btn.title = 'Setzt alle Aufgaben auf den Ausgangszustand zurück';
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+        const confirmed = window.confirm(
+            'Das setzt ALLE Aufgaben auf den Ausgangszustand zurück und löscht deinen bisherigen Code. Fortfahren?'
+        );
+        if (!confirmed) {
+            return;
+        }
+
+        const deleteRequest = indexedDB.deleteDatabase('JupyterLite Storage');
+        deleteRequest.onsuccess = () => {
+            localStorage.clear();
+            window.location.reload();
+        };
+        deleteRequest.onerror = () => {
+            window.alert('Zurücksetzen fehlgeschlagen. Bitte lade die Seite manuell neu.');
+        };
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addResetButton);
+} else {
+    addResetButton();
 }
 
 // Custom favicon so the browser tab doesn't show the stock JupyterLite icon.
