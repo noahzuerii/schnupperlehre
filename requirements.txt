@@ -8,11 +8,11 @@ jupyterlite-pyodide-kernel==0.4.1
 
 
 # Language support (optional)
-jupyterlab-language-pack-fr-FR
-jupyterlab-language-pack-de-DE
+jupyterlab-language-pack-fr-FR==4.2.post3
+jupyterlab-language-pack-de-DE==4.2.post3
 
 # JupyterLab: dark theme
-jupyterlab-night
+jupyterlab-night==0.5.2
 # JupyterLab: Miami nights theme (optional)
-jupyterlab_miami_nights
-catppuccin-jupyterlab
+jupyterlab_miami_nights==0.4.3
+catppuccin-jupyterlab==0.2.5
